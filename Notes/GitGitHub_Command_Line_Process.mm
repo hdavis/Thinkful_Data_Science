@@ -25,6 +25,11 @@ Command Line Process" FOLDED="false">
                 <font NAME="Helvetica" SIZE="10" />
             </node>
         </node>
+        <node TEXT="git status 
+(to check status of repo)" FOLDED="false" POSITION="left">
+            <edge COLOR="#ebd95f" />
+            <font NAME="Helvetica" SIZE="10" />
+        </node>
         <node TEXT="Save local snapshot to GitHub" FOLDED="false" POSITION="right">
             <edge COLOR="#988ee3" />
             <font NAME="Helvetica" SIZE="10" />
@@ -45,10 +50,13 @@ Command Line Process" FOLDED="false">
                 <font NAME="Helvetica" SIZE="10" />
             </node>
         </node>
-        <node TEXT="git status 
-(to check status of repo)" FOLDED="false" POSITION="left">
-            <edge COLOR="#ebd95f" />
+        <node TEXT="Pull code from GitHub" FOLDED="false" POSITION="left">
+            <edge COLOR="#9ed56b" />
             <font NAME="Helvetica" SIZE="10" />
+            <node TEXT="git pull origin master (might be just 'git pull')" FOLDED="false">
+                <edge COLOR="#a8d564" />
+                <font NAME="Helvetica" SIZE="10" />
+            </node>
         </node>
         <node TEXT="Make commits to an EXISTING repo" FOLDED="false" POSITION="right">
             <edge COLOR="#efa670" />
@@ -65,20 +73,16 @@ Command Line Process" FOLDED="false">
                 <edge COLOR="#ee9778" />
                 <font NAME="Helvetica" SIZE="10" />
                 <node TEXT="git commit -m &quot;Create filename.py&quot;" FOLDED="false">
-                    <edge COLOR="#ec8a73" />
+                    <edge COLOR="#efa670" />
                     <font NAME="Helvetica" SIZE="10" />
                 </node>
-                <node TEXT="git commit -am '&lt;commit_message&gt;' (-a adds all changes to previously committed files - saves having to add them explicitly with git add ...)" FOLDED="false">
-                    <edge COLOR="#ed776e" />
+                <node TEXT="git commit -am '&lt;commit_message&gt;' (-a adds all changes to files already being tracked which saves having to add them explicitly with git add ...) If have new files that have never been committed, need to set up tracking so use git add ." FOLDED="false">
+                    <edge COLOR="#efa670" />
                     <font NAME="Helvetica" SIZE="10" />
                 </node>
             </node>
-        </node>
-        <node TEXT="Pull code from GitHub" FOLDED="false" POSITION="left">
-            <edge COLOR="#9ed56b" />
-            <font NAME="Helvetica" SIZE="10" />
-            <node TEXT="git pull origin master" FOLDED="false">
-                <edge COLOR="#a8d564" />
+            <node TEXT="git push (to push committed local files to the remote repo)" FOLDED="false">
+                <edge COLOR="#e68782" />
                 <font NAME="Helvetica" SIZE="10" />
             </node>
         </node>
