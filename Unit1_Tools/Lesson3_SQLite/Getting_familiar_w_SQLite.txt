@@ -1,0 +1,135 @@
+# Unit 1, Lesson 3, Assignment 1 - Getting familiar with SQLite
+
+# list of commands
+
+sqlite3 getting_started.db
+
+
+.tables
+.indices
+.schema
+
+
+CREATE TABLE cities (name text, state text);
+
+INSERT INTO cities (name, state) VALUES
+    ('New York City', 'NY'),
+    ('Boston', 'MA'),
+    ('Chicago', 'IL'),
+    ('Miami', 'FL'),
+    ('Dallas', 'TX'),
+    ('Seattle', 'WA'),
+    ('Portland', 'OR'),
+    ('San Francisco', 'CA'),
+    ('Los Angeles', 'CA');
+    
+# Try it section:    
+CREATE TABLE weather2 (city text, year integer, warm_month text, cold_month text, average_high integer);    
+
+# might have a problem with city field - it had a space in front of it when I created the weather table.  weather2 table does not have the space in front of the name.
+INSERT INTO weather2 (city, year, warm_month, cold_month, average_high) VALUES
+    ('New York City', 2013, 'July', 'January', 62),
+    ('Boston', 2013, 'July', 'January', 59),
+    ('Chicago', 2013, 'July', 'January', 59),
+    ('Miami', 2013, 'August', 'January', 84),
+    ('Dallas', 2013, 'July', 'January', 77),
+    ('Seattle', 2013, 'July', 'January', 61),
+    ('Portland', 2013, 'July', 'December', 63),
+    ('San Francisco', 2013, 'September', 'December', 64),
+    ('Los Angeles', 2013, 'September', 'December', 75);
+
+    
+    
+# WRITING QUERIES ON YOUR DATA (I.E. READING THE DATA IN THE DATABASE)
+    
+SELECT * FROM cities;
+    
+SELECT name, state FROM cities;
+
+SELECT name, state FROM cities WHERE state='CA';
+
+SELECT name FROM cities WHERE name LIKE '%le%'; # LIKE means contains the substring between the two %s which are wildcard characters.
+
+SELECT name FROM cities LIMIT 2 OFFSET 3; # LIMIT = # of rows that will be returned; OFFSET = how many rows to skip which match the query to give an offset in the data.
+
+SELECT COUNT(*) FROM cities WHERE name LIKE 'San%' AND state='CA';
+
+# %% Try it! for SQL queries
+
+# How many rows are in the weather table?
+SELECT COUNT(*) FROM weather2 WHERE year=2013;
+# 9
+
+# What cities were hottest in July in 2013?
+SELECT city FROM weather2 WHERE warm_month='July';
+#New York City
+#Boston
+#Chicago
+#Dallas
+#Seattle
+#Portland
+
+# What cities were hottest in July and not coldest in January?
+SELECT city FROM weather2 WHERE warm_month='July' AND cold_month!='January';
+# Portland
+
+# The first two cities which were coldest in January
+SELECT city FROM weather2 WHERE cold_month='January' LIMIT 2;
+# New York City
+# Boston
+
+# Updating data
+UPDATE cities SET state='Californ-I-A' WHERE state='CA';
+
+UPDATE cities SET state='CA' WHERE state='Californ-I-A';
+
+DELETE FROM cities where state='CA';
+
+DELETE FROM cities where state='NY';
+DELETE FROM cities where state='MA';
+DELETE FROM cities where state='IL';
+DELETE FROM cities where state='FL';
+DELETE FROM cities where state='TX';
+DELETE FROM cities where state='WA';
+DELETE FROM cities where state='OR';
+
+INSERT INTO cities (name, state) VALUES
+    ('New York City', 'NY'),
+    ('Boston', 'MA'),
+    ('Chicago', 'IL'),
+    ('Miami', 'FL'),
+    ('Dallas', 'TX'),
+    ('Seattle', 'WA'),
+    ('Portland', 'OR'),
+    ('San Francisco', 'CA'),
+    ('Los Angeles', 'CA');
+
+# Export data to CSV ------------------
+
+# export cities table
+
+# switch output mode to CSV
+.mode csv
+
+# turn on the column headers
+.headers on
+
+# output any statements to the cities.csv file using the .output command
+.output cities.csv
+
+# query to select all of the rows from the cities table (and write it to the csv file since the line before indicated where to write the rows)
+select * from cities;
+
+# I assume all the rows were already written so switch output mode from CSV back into command line mode
+.output stdout
+
+# Import data from CSV --------------------
+
+create table cities_copy (name text, state text);
+.tables
+
+.separator ","
+
+.import cities.csv cities_copy
+select * from cities_copy;
+
