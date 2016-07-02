@@ -56,7 +56,7 @@ var_Tobacco = df['Tobacco'].var()
 
 print('The following are the summary statistics for the weekly household spending data in the Alcohol and Tobacco dataset. All values are in British pounds spent per week in 1981.')
 print('\n')
-print('The mean for Alcohol is {}'.format(mean_Alcohol) + ' pounds.')
+print('The mean for Alcohol is {:.3f} pounds.'.format(mean_Alcohol))
 print('The median for Alcohol is {}'.format(median_Alcohol) + ' pounds.')
 print('The mode for Alcohol is {}'.format(mode_Alcohol[0][0]) + ' pounds.')
 print('The range for Alcohol is {}'.format(range_Alcohol) + ' pounds.')

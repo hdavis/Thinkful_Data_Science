@@ -60,3 +60,18 @@ range_Tobacco = df['Tobacco'].max() - df['Tobacco'].min() # one way to calc rang
 range_Tobacco2 = max(df['Tobacco']) - min(df['Tobacco']) # another way to calc range
 std_Tobacco = df['Tobacco'].std()
 var_Tobacco = df['Tobacco'].var()
+
+
+# %% Overview of Probability
+
+import matplotlib.pyplot as plt
+import numpy as np
+import matplotlib.mlab as mlab
+
+mean = 0
+variance = 1
+sigma = np.sqrt(variance) # standard definition of the standard deviation
+x = np.linspace(-3,3,100)
+plt.plot(x, mlab.normpdf(x,mean,sigma))
+
+plt.show()
