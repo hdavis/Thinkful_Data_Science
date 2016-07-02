@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>A Look at the Last 30 days of Maximum Temperatures</title>
+	<meta charset="utf-8" />
+
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/leaflet.css" />
+	<!--[if lte IE 8]><link rel="stylesheet" href="../dist/leaflet.ie.css" /><![endif]-->
+    <style type="text/css">
+    html, body, #map{
+     height: 100%;
+     width: 100%;
+     margin: 0;
+     padding: 0;
+    }
+    </style>
+</head>
+<body>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
+
+    <div id="map"></div>
+
+    <script>
+        // All javascript needs to be within these <script> tags
+        var map = L.map('map');
+        var zoomax = 18;
+
+        // BASEMAPS
+        // Explore the following URL to discover additional basemaps, https://leaflet-extras.github.io/leaflet-providers/preview/
+
+        // Standard OSM basemap
+        var openstreetUrl = 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+        var openstreet = new L.tileLayer(openstreetUrl, {maxZoom: zoomax});
+        map.addLayer(openstreet);
+
+        // MapQuest Aerial Basemap
+    //    var mapquestAerialUrl = 'http://otile{s}.mqcdn.com/tiles/1.0.0/sat/{z}/{x}/{y}.jpg';
+    //    var mapaerial = new L.tileLayer(mapquestAerialUrl, {maxZoom: zoomax, subdomains:'1234'});
+    //    map.addLayer(mapaerial);
+        
+        // Stamen Watercolor Basemap
+        var stamenWaterURL = 'http://{s}.tile.stamen.com/watercolor/{z}/{x}/{y}.png';
+        var stamenLayer = L.tileLayer(stamenWaterURL, {maxZoom: zoomax, attribution: false });
+        map.addLayer(stamenLayer);
+
+
+        var OpenMapSurfer_Roads = L.tileLayer('http://korona.geog.uni-heidelberg.de/tiles/roads/x={x}&y={y}&z={z}', {
+        maxZoom: 20,
+        attribution: 'Imagery from <a href="http://giscience.uni-hd.de/">GIScience Research Group @ University of Heidelberg</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+        });
+
+
+        // OVERLAYS
+
+        // (1) Add data from our local machine
+        var sf_schools = new L.geoJson();
+        sf_schools.addTo(map);
+
+        $.ajax({
+        dataType: "json",
+        url: "San Francisco Public Schools - Points.geojson",
+        success: function(data) {
+            $(data.features).each(function(key, data) {
+            sf_schools.addData(data);
+            });
+        }
+        }).error(function() {});
+
+        // (2) Add a WMS for weather data
+        var nexrad = L.tileLayer.wms("http://mesonet.agron.iastate.edu/cgi-bin/wms/nexrad/n0r.cgi", {
+        layers: 'nexrad-n0r-900913',
+        format: 'image/png',
+        transparent: true,
+        attribution: "Weather data © 2012 IEM Nexrad"
+        });
+        map.addLayer(nexrad);
+
+
+        // Define and display the control for Basemaps and Overlays
+        // Any dataset we want to select from the map needs to be listed here
+        var baseLayers = {
+            "Open Street Map": openstreet,
+           // "Map Quest Aerial": mapaerial,
+            "Water Color": stamenLayer
+        };
+        var overlays = {
+            "SF Public Schools": sf_schools,
+            "Weather": nexrad,
+        };
+        L.control.layers(baseLayers, overlays).addTo(map);
+
+        map.setView([38, -122], 4);
+    </script>
+</body>
+</html>
