@@ -10,6 +10,10 @@ import requests
 import json
 import sqlite3 as lite
 import pandas as pd
+# import numpy as np
+# import seaborn as sns
+# import matplotlib.pyplot as plt
+# import plotly.plotly as py
 import plotly
 import plotly.graph_objs as go
 
@@ -19,6 +23,7 @@ cities = {"Atlanta": '33.755960,-84.390304',
           "Boston": '42.358056,-71.063611',
           "Denver": '39.761850,-104.881105',
           "Los Angeles": '34.050000,-118.250000',
+          # "San Francisco": '37.783333,-122.416667',
           "Seattle": '47.609722,-122.333056'
           }
 
@@ -142,6 +147,7 @@ df_Austin = df[df.city == 'Austin']
 df_Boston = df[df.city == 'Boston']
 df_Denver = df[df.city == 'Denver']
 df_LosAngeles = df[df.city == 'Los Angeles']
+# df_SanFrancisco = df[df.city == 'San Francisco']
 df_Seattle = df[df.city == 'Seattle']
 
 # Create a box plot for each city using the plotly library.
@@ -152,6 +158,7 @@ x_data = ['Atlanta',
           'Boston',
           'Denver',
           'Los Angeles',
+          # 'San Francisco',
           'Seattle'
           ]
 
@@ -160,6 +167,7 @@ y_data = [df_Atlanta['tmax'],
           df_Boston['tmax'],
           df_Denver['tmax'],
           df_LosAngeles['tmax'],
+          # df_SanFrancisco['tmax'],
           df_Seattle['tmax']
           ]
 
@@ -210,4 +218,6 @@ layout = go.Layout(
 )
 
 fig = go.Figure(data=traces, layout=layout)
+# plotly.offline.plot(fig)
+# plotly.tools.embed("https://plot.ly/~streaming-demos/4")
 plotly.plotly.iplot(fig)
