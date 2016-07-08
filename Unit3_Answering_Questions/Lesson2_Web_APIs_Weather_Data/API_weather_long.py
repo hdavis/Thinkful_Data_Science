@@ -11,11 +11,11 @@ import json
 import sqlite3 as lite
 import pandas as pd
 # import numpy as np
-# import seaborn as sns
+import seaborn as sns
 # import matplotlib.pyplot as plt
 # import plotly.plotly as py
-import plotly
-import plotly.graph_objs as go
+# import plotly
+# import plotly.graph_objs as go
 
 # Create cities dictionary to include cities of interest and their locations
 cities = {"Atlanta": '33.755960,-84.390304',
@@ -140,6 +140,7 @@ for k, v in cities.iteritems():
 
 df_summary.to_csv('summary.csv', index=False)
 
+'''
 # To plot the data via box plots, each city's 30-days of data needs to be
 # separated out into its own DataFrame.
 df_Atlanta = df[df.city == 'Atlanta']
@@ -218,6 +219,14 @@ layout = go.Layout(
 )
 
 fig = go.Figure(data=traces, layout=layout)
+plotly.plotly.iplot(fig)
+
+# not using
 # plotly.offline.plot(fig)
 # plotly.tools.embed("https://plot.ly/~streaming-demos/4")
-plotly.plotly.iplot(fig)
+'''
+# Create a box plot for each city using the seaborn library.
+sns.set_style("whitegrid")
+ax = sns.boxplot(x="city", y="tmax", data=df.sort_values(by='city'))
+ax = sns.swarmplot(x="city", y="tmax", data=df.sort_values(by='city'),
+                   color=".25")
